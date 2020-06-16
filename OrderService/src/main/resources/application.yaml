@@ -1,0 +1,52 @@
+server:  
+  port: 9095
+  
+spring:
+ application:
+    name: order-service
+    
+ datasource:
+    url: jdbc:h2:mem:Orderdb;INIT=RUNSCRIPT FROM 'classpath:/data.sql'
+    driver-class-name: org.h2.Driver
+    username: ibm
+    password: ibm
+ jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+ h2:
+    console:
+      enabled: true    
+
+    
+# rabbitmq:
+#    host: 192.168.99.100
+#    port: 5672
+#    username: guest
+#    password: guest
+#    
+# zipkin:
+#    base-url: http://192.168.99.100:9411/
+#    
+# sleuth:
+#    sampler:
+#      probability: 1.0
+#    trace-id128: true   
+ 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"    
+    
+eureka:
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${random.int}
+    lease-expiration-duration-in-seconds: 2
+    lease-renewal-interval-in-seconds: 1
+  client:
+    service-url:
+      defaultZone: http://192.168.99.100:9091/eureka    
+
+auth-server.url: http://192.168.99.100:9092        
+      
+msg: Order service - production

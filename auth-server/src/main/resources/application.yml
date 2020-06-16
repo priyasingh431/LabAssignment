@@ -1,0 +1,36 @@
+check-user-scopes: true
+
+server:
+  port: 9999
+  servlet:
+    context-path: /uaa 
+  use-forward-headers: false
+  
+  
+spring:
+  profiles: default
+  application:
+    name: auth-server
+  datasource:
+    url: jdbc:h2:mem:auhtnewdb;INIT=RUNSCRIPT FROM 'classpath:/data.sql'
+    driver-class-name: org.h2.Driver
+    username: ibm
+    password: ibm
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true   
+
+
+    
+
+eureka:
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${random.int}
+    lease-expiration-duration-in-seconds: 2
+    lease-renewal-interval-in-seconds: 1
+  client:
+    service-url:
+      defaultZone: http://192.168.99.100:9091/eureka  

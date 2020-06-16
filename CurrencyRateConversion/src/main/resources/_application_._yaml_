@@ -1,0 +1,26 @@
+server:
+  port: 9092
+
+  
+spring:
+ application:
+    name: Currency-Rate-Convertion-Service
+ zipkin:
+    base-url: http://192.168.99.100:9411/
+    
+ sleuth:
+    sampler:
+      probability: 1.0
+    trace-id128: true   
+    
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
+    lease-expiration-duration-in-seconds: 2
+    lease-renewal-interval-in-seconds: 1
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka    
+      
+rate.converstion.service.uri : https://api.exchangeratesapi.io/latest          

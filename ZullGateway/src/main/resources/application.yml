@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: zull
+    
+server:  port: 9092
+
+
+management:  endpoint:    restart:      enabled: true
+    shutdown:      enabled: true
+    health:      enabled: false   
+
+
+zuul:
+  ignoredServices: "*"
+  routes:
+    order-service:
+      sensitiveHeaders:
+      path: /**
+      stripPrefix: false
+      serviceId: order-service 
+    product-service:  
+      sensitiveHeaders:
+      path: /products/**
+      stripPrefix: false
+      serviceId: product-service 
+    inventory-service:  
+      sensitiveHeaders:
+      path: /ms-got/**
+      stripPrefix: false
+      serviceId: inventory-service 
+    auth-server:  
+      sensitiveHeaders:
+      path: /uaa/**
+      stripPrefix: false
+      serviceId: auth-server
+  
+eureka:
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${random.int}
+    lease-expiration-duration-in-seconds: 2
+    lease-renewal-interval-in-seconds: 1
+  client:
+    service-url:
+      defaultZone: http://192.168.99.100:9091/eureka
+    

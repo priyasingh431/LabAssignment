@@ -1,0 +1,35 @@
+server:
+  port: 8082
+  
+spring:
+ application:
+    name: API-Gateway
+ cloud:
+    gateway:
+      routes:
+      - id: currencyconvertionservice
+        uri: lb://Currency-Convertion-Service
+        predicates:
+        - Path=/currencyconversion/**   
+      - id: currencyrateconvertionservice
+        uri: lb://Currency-Rate-Convertion-Service
+        predicates:
+        - Path=/convertrate/**   
+        
+ rabbitmq:
+    host: 192.168.99.100
+    port: 5672
+    username: guest
+    password: guest
+
+   
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
+    lease-expiration-duration-in-seconds: 2
+    lease-renewal-interval-in-seconds: 1
+  client:
+    service-url:
+      defaultZone: http://192.168.99.100:9091/eureka
+      
+msg: API gateway message      
